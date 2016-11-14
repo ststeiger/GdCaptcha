@@ -1,0 +1,75 @@
+﻿
+https://code.google.com/archive/p/3dcaptcha/downloads
+https://code.google.com/archive/p/3dcaptcha/issues/4
+
+
+AddNoise
+https://www.owasp.org/index.php/Session_Management_Cheat_Sheet#Session_ID_Name_Fingerprinting
+
+https://github.com/webmproject/libwebp
+https://github.com/imazen/gd-libgd/tree/master/windows
+https://www.nuget.org/packages/libwebp.v140/
+
+https://github.com/imazen/gd-win-dependencies
+
+
+typedef gdImage *gdImagePtr;
+https://github.com/libgd/libgd/blob/1f3f82d9010a76d6613575707e4b9d650cf15661/src/gd.h
+
+http://web.mit.edu/spin_v4.2.5/include/graphviz/gd.h
+#ifdef NONDLL
+#define BGD_DECLARE(rt) extern rt
+#else
+#ifdef BGDWIN32
+#define BGD_DECLARE(rt) __declspec(dllexport) rt __stdcall
+#else
+#define BGD_DECLARE(rt) __declspec(dllimport) rt _stdcall
+#endif /* BGDWIN32 */
+#endif /* NONDLL */
+
+
+
+
+#define BGD_DECLARE(rt) BGD_EXPORT_DATA_PROT rt BGD_STDCALL
+
+# ifdef BGDWIN32
+#  ifdef NONDLL
+#   define BGD_EXPORT_DATA_PROT
+#  else
+#   ifdef __GNUC__
+#    define BGD_EXPORT_DATA_PROT __attribute__ ((dllexport))
+#   else
+#    define BGD_EXPORT_DATA_PROT __declspec(dllexport)
+#   endif
+#  endif
+# define BGD_STDCALL __stdcall
+
+
+
+<script language="javascript">
+<!--
+window.onbeforeunload = domystuff;
+function domystuff(){
+   //...
+}
+//-->
+</script>
+
+
+You're talking about a non-persistent cookie. 
+By default asp.net sends cookies in that way. 
+The main difference between them are that a persistent cookie has an expires value set.
+
+So, if you don't want the cookie to persist, then do not set the expires value.
+
+That said, the cookie will remain in memory until the browser is actually closed. 
+
+
+It's important to note that these days you can't count on a session cookie being deleted when the user closes the browser. 
+Both Chrome and Firefox made that change back in 2012 or so - see the various links at this answer.
+
+
+
+http://www.tecmint.com/run-php-codes-from-linux-commandline/
+ php -r 'phpinfo();'
+ # php -a
