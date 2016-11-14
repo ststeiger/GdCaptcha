@@ -54,16 +54,22 @@ namespace GdTest
             
 
             GdTest.Helpers.Test();
-            return;
 
-            using (GD image = new GD(256 + 384, 384, true))
+            if (false)
             {
-                GDColor white = image.ColorAllocate(255, 255, 255);
-                image.FilledRectangle(0, 0, 256 + 384, 384, white);
+                using (GD image = new GD(256 + 384, 384, true))
+                {
+                    GDColor white = image.ColorAllocate(255, 255, 255);
+                    image.FilledRectangle(0, 0, 256 + 384, 384, white);
 
 
-                image.Save(GD.FileType.Png, "text.png", 1);
+                    image.Save(GD.FileType.Png, "text.png", 1);
+                } // End Using image 
             }
+
+            System.Console.WriteLine(System.Environment.NewLine);
+            System.Console.WriteLine(" --- Press any key to continue --- ");
+            System.Console.ReadKey();
         }
 
 
