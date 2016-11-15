@@ -318,7 +318,7 @@ namespace GdTest
                             {
                                 if (x > 0)
                                 {
-                                    var c = coord[count - 1];
+                                    double[] c = coord[count - 1];
                                     if (c == null)
                                         continue;
 
