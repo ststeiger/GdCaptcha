@@ -1,13 +1,35 @@
-<?
+#!/usr/bin/env php
+<?php
 
-/**
- * 3D Captcha
- * (C) 2006 by Marc S. Ressl
- */
- 
-// Get captcha text
-session_start();
-$captchaText = $_SESSION['3DCaptchaText'];
+// apt-get install php5-cli php5-fpm php5-gd
+// http://stackoverflow.com/questions/10262532/running-php-script-from-the-command-line
+// http://stackoverflow.com/questions/21731745/how-to-add-shebang-with-php-script-on-linux
+$a = 2;
+$b = 3;
+$c = 2*2+3*3;
+
+echo '#!/usr/bin/php' . PHP_EOL; // Single-Quotes: PHP_EOL
+echo "this is my text\n"; // Double-quotes: \n
+echo "a²+b² = $c\n";
+
+function generateCaptchaTextRandom($length) {
+	// Character list is fine tuned:
+	// No 0-O-o
+	$chars = 'abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPRSTUVWXYZ123456789';
+	$n = strlen($chars);
+	$captchaText = '';
+
+	for ($i = 0; $i < $length; $i++) {
+		$captchaText .= $chars[rand(0, $n - 1)];
+	}
+
+	return $captchaText;
+}
+
+$captchaText = generateCaptchaTextRandom(5);
+echo "Random Text: $captchaText\n";
+
+
 
 // Functions
 function addVector($a, $b) {
@@ -96,8 +118,9 @@ function viewingTransform($fov, $n, $f) {
 }
 // 3dcha parameters
 $fontsize = 24;
-$fontfile = '3DCaptcha.ttf';
+$fontfile = '/root/Projects/GdCaptcha/GdTest/Img/3DCaptcha.ttf';
 
+// $image2d_x = 38; 
 $details = imagettfbbox($fontsize, 0, $fontfile, $captchaText);
 $image2d_x = $details[4] + 4;
 $image2d_y = $fontsize * 1.3;
@@ -154,7 +177,9 @@ $scale = 1.75 - $image2d_x/400;
 for ($y = 0; $y < $image2d_y; $y++) {
 	for ($x = 0; $x < $image2d_x; $x++) {
 		if ($x > 0) {
+
 			if(!isset($coord[$count - 1])) continue;
+
 			$x0 = $coord[$count - 1][0] * $scale + $image3d_x / 2;
 			$y0 = $coord[$count - 1][1] * $scale + $image3d_y / 2;
 			$x1 = $coord[$count][0] * $scale + $image3d_x / 2;
@@ -165,9 +190,15 @@ for ($y = 0; $y < $image2d_y; $y++) {
 	}
 }
 
-header("Content-type: image/jpeg");
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Mon, 03 Apr 1977 11:05:00 GMT"); // Date in the very past, guess what it is
-imagejpeg($image3d);
+//imagejpeg($image3d);
+// imagejpeg($image3d, "/root/Projects/3dcaptcha.jpg");
+imagejpeg($image3d, "cfile.jpg");
+
+/*
+$testGD = get_extension_funcs("gd"); // Grab function list 
+if (!$testGD){ echo "GD not even installed."; exit; }
+echo"<pre>".print_r($testGD,true)."</pre>";
+*/
 
 ?>
+
