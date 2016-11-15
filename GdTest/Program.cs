@@ -11,7 +11,7 @@ namespace GdTest
 
 
         // http://www.sitepoint.com/forums/showthread.php?520206-Warp-Text-in-PHP-GD
-        public static void ware_area(GD img)
+        public static void wave_area(GD img)
         {
             int width = 256 + 384;
             int height = 384;
@@ -29,7 +29,7 @@ namespace GdTest
 
 
                 for(int i = 0; i < width2; i += 2)
-                    img2.Copy(img2, x + i - 2, (int)(y + System.Math.Sin(i / period) * amplitude), x + i, y, 2, height2);
+                    img2.Copy(img2, x + i - 2, (int)(y + System.Math.Sin((double)i / period) * amplitude), x + i, y, 2, height2);
 
                 img.CopyResampled(img2, x, y, 0, 0, width, height, width2, height2);
             }
@@ -100,7 +100,7 @@ namespace GdTest
                 }
 
 
-                ware_area(image);
+                wave_area(image);
 
                 image.Interlace = true;
                 image.Save( GD.FileType.Png, "text.png", 1 );

@@ -1,46 +1,51 @@
 ﻿
-namespace GdTest
+namespace GdTest 
 {
 
 
-    class Helpers
+    class Helpers 
     {
+
 
         public static double[] addVector(double[] a, double[] b)
         {
             return new double[] { a[0] + b[0], a[1] + b[1], a[2] + b[2] };
-        }
+        } // End Function addVector 
+
 
         public static double[] scalarProduct(double[] vector, double scalar)
         {
             return new double[] { vector[0] * scalar, vector[1] * scalar, vector[2] * scalar };
-        }
+        } // End Function scalarProduct 
+
 
         public static double dotProduct(double[] a, double[] b)
         {
             return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-        }
+        } // End Function dotProduct 
 
 
         public static double norm(double[] vector)
         {
             return System.Math.Sqrt(dotProduct(vector, vector));
-        }
+        } // End Function norm 
+
 
         public static double[] normalize(double[] vector)
         {
             return scalarProduct(vector, 1 / norm(vector));
-        }
+        } // End Function normalize 
+
 
         // http://en.wikipedia.org/wiki/Cross_product
         public static double[] crossProduct(double[] a, double[] b)
         {
             return new double[]{
-		    (a[1] * b[2] - a[2] * b[1]),
-		    (a[2] * b[0] - a[0] * b[2]),
-		    (a[0] * b[1] - a[1] * b[0])
+		        (a[1] * b[2] - a[2] * b[1]),
+		        (a[2] * b[0] - a[0] * b[2]),
+		        (a[0] * b[1] - a[1] * b[0])
 		    };
-        }
+        } // End Function crossProduct 
 
 
         public static double[] vectorProductIndexed(double[] v, double[] m, int i)
@@ -51,14 +56,13 @@ namespace GdTest
 		        v[i + 0] * m[2] + v[i + 1] * m[6] + v[i + 2] * m[10]+ v[i + 3] * m[14],
 		        v[i + 0] * m[3] + v[i + 1] * m[7] + v[i + 2] * m[11]+ v[i + 3] * m[15]
             };
-        }
-
+        } // End Function vectorProductIndexed 
 
 
         public static double[] vectorProduct(double[] v, double[] m)
         {
             return vectorProductIndexed(v, m, 0);
-        }
+        } // End Function vectorProduct 
 
 
         public static double[] matrixProduct(double[] a, double[] b)
@@ -74,7 +78,7 @@ namespace GdTest
 		        o3[0], o3[1], o3[2], o3[3],
 		        o4[0], o4[1], o4[2], o4[3]
             };
-        }
+        } // End Function matrixProduct 
 
 
         // http://graphics.idav.ucdavis.edu/education/GraphicsNotes/Camera-Transform/Camera-Transform.html
@@ -92,13 +96,12 @@ namespace GdTest
 		        u[2], v[2], w[2], 0,
 		        dotProduct(u, t), dotProduct(v, t), dotProduct(w, t), 1
             };
-        }
+        } // End Function cameraTransform 
 
 
         // http://graphics.idav.ucdavis.edu/education/GraphicsNotes/Viewing-Transformation/Viewing-Transformation.html
         public static double[] viewingTransform(double fov, double n, double f)
         {
-
             fov *= (System.Math.PI / 180.0);
             double cot = 1 / System.Math.Tan(fov / 2);
 
@@ -108,7 +111,7 @@ namespace GdTest
 		        0,		0,		(f + n) / (f - n),		-1,
 		        0,		0,		2 * f * n / (f - n),	0
             };
-        }
+        } // End Function viewingTransform 
 
 
         private static System.Random seed = new System.Random();
@@ -116,14 +119,13 @@ namespace GdTest
         public static double rand(int min, int max)
         {
             return seed.Next(min, max + 1);
-        }
+        } // End Function rand 
 
 
         public class Rect
         {
             public int p1X;
             public int p1Y;
-
 
             public int p2X;
             public int p2Y;
@@ -140,21 +142,23 @@ namespace GdTest
 
             public int Width
             {
-                get{
-                    return System.Math.Abs(p1X-p2X);
+                get
+                {
+                    return System.Math.Abs(p1X - p2X);
                 }
             }
 
             public int Height
             {
-                get{
-                return System.Math.Abs(p1Y-p2Y);
+                get
+                {
+                    return System.Math.Abs(p1Y - p2Y);
                 }
             }
-        }
+
+        } // End Class Rect 
 
 
-        
         public static Rect Gettfbbox(Ntx.GD.GD image, string fontFile, int fontsize, double angle, string text)
         {
             System.Collections.ArrayList details = new System.Collections.ArrayList();
@@ -182,10 +186,10 @@ namespace GdTest
 
                 if (p.Y > maxY)
                     maxY = p.Y;
-            }
+            } // Next obj 
 
             return new Rect(minX, minY, maxX, maxY);
-        }
+        } // End Sub Gettfbbox 
 
 
         public static void Test()
@@ -296,6 +300,7 @@ namespace GdTest
                                     var c = coord[count - 1];
                                     if (c == null)
                                         continue;
+
                                     var c0 = c[0];
                                     var c1 = c[1];
 
@@ -306,7 +311,7 @@ namespace GdTest
 
                                     // imageline(image3d, x0, y0, x1, y1, fgcolor);
                                     image3d.Line((int)x0, (int)y0, (int)x1, (int)y1, fgcolor);
-                                }
+                                } // End if (x > 0) 
 
                                 count++;
                             } // Next x 
@@ -320,10 +325,10 @@ namespace GdTest
 
             } // End Using image 
 
-        } // End Sub 
+        } // End Sub Test 
 
 
-    } // End Class 
+    } // End Class Helpers 
 
 
-} // End Namespace 
+} // End Namespace GdTest 
