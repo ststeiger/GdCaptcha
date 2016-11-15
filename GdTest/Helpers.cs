@@ -195,23 +195,25 @@ namespace GdTest
         public static void Test()
         {
             string captchaText = "hello";
+            captchaText = "abc123";
 
             using (Ntx.GD.GD image = new Ntx.GD.GD(256 + 384, 384, true))
             {
                 // 3dcha parameters
                 int fontsize = 24;
 
-                string fontfile = "3DCaptcha.ttf";
-                fontfile = "Arial.ttf";
-
+                string fontfile = "/root/Projects/GdCaptcha/GdTest/Img/3DCaptcha.ttf";
+                // fontfile = image.MapFont("Arial.ttf")
                 
                 // details = imagettfbbox(fontsize, 0, fontfile, captchaText);
-                Rect details = Gettfbbox(image, image.MapFont(fontfile), fontsize, 0, captchaText);
+                Rect details = Gettfbbox(image, fontfile, fontsize, 0, captchaText);
 
 
                 //var p = (Ntx.GD.Point) details[3];
                 // int image2d_x = (int)details[3] + 4;
-                int image2d_x = details.Width;
+                // int image2d_x = details.Width;
+                int image2d_x = 110;
+                double dblimage2d_y = System.Math.Round( ( fontsize * 1.3f) , 1);
                 int image2d_y = (int)( fontsize * 1.3f);
                 int bevel = 4;
 
@@ -230,11 +232,16 @@ namespace GdTest
                     // imagettftext(image2d, fontsize, 0, 2, fontsize, white, fontfile, captchaText);
                     System.Collections.ArrayList dimension = new System.Collections.ArrayList(); // fontfile
 
-                    image2d.StringFT(dimension, white, image2d.MapFont(fontfile), fontsize, 0, 2, 0, captchaText, true);
+                    int halfRestSize = (int)((image2d_y - fontsize) / 2.0);
+
+                    image2d.StringFT(dimension, white, fontfile, fontsize - halfRestSize, 0, 2, (int)fontsize, captchaText, true);
+                    // image2d.Save(Ntx.GD.GD.FileType.Png, "/root/Projects/GdCaptcha/GdTest/Img/ftstring.png", 1);
+
 
                     // Calculate projection matrix
                     double[] T = cameraTransform(
-                        new double[] { rand(-90, 90), -200, rand(150, 250) },
+                        //new double[] { rand(-90, 90), -200, rand(150, 250) },
+                        new double[] { 45, -200, 220 },
                         new double[] { 0, 0, 0 }
                     );
 
@@ -254,16 +261,13 @@ namespace GdTest
                         {
                             
                             // calculate x1, y1, x2, y2
-                            int xc = x - image2d_x / 2;
-                            int zc = y - image2d_y / 2;
+                            double xc = x - image2d_x / 2.0;
+                            double zc = y - dblimage2d_y / 2.0;
 
                             //yc = -(imagecolorat(image2d, x, y) & 0xff) / 256 * bevel;
-                            int yc = -(image2d.GetPixel(x, y).Index & 0xff) / 256 * bevel;
+                            double yc = -(image2d.GetPixel(x, y).Index & 0xff) / 256.0 * bevel;
                             double[] xyz = new double[] { xc, yc, zc, 1 };
                             xyz = vectorProduct(xyz, T);
-
-                            if (xyz == null)
-                                System.Console.WriteLine("null");
 
                             coord[count] = xyz;
                             count++;
@@ -318,7 +322,10 @@ namespace GdTest
 
                         } // Next y 
 
-                        image.Save(Ntx.GD.GD.FileType.Png, "mesh.png", 1);
+                        if(System.Environment.OSVersion.Platform == System.PlatformID.Unix)
+                            image3d.Save(Ntx.GD.GD.FileType.Png, "/root/Projects/GdCaptcha/GdTest/Img/mesh.png", 1);
+                        else
+                            image3d.Save(Ntx.GD.GD.FileType.Png, "mesh.png", 1);
                     } // End using image3d 
 
                 } // End Using image2d
