@@ -27,6 +27,7 @@ function generateCaptchaTextRandom($length) {
 }
 
 $captchaText = generateCaptchaTextRandom(5);
+// $captchaText = "abc123";
 echo "Random Text: $captchaText\n";
 
 
@@ -125,6 +126,9 @@ $details = imagettfbbox($fontsize, 0, $fontfile, $captchaText);
 $image2d_x = $details[4] + 4;
 $image2d_y = $fontsize * 1.3;
 
+// echo "image2d_x: $image2d_x\n";
+// echo "image2d_y: $image2d_y\n";
+
 $bevel = 4;
 
 // Create 2d image
@@ -138,6 +142,7 @@ imagettftext($image2d, $fontsize, 0, 2, $fontsize, $white, $fontfile, $captchaTe
 
 // Calculate projection matrix
 $T = cameraTransform(
+		//array(45, -200, 220),
 		array(rand(-90, 90), -200, rand(150, 250)),
 		array(0, 0, 0)
 	);
@@ -145,6 +150,10 @@ $T = matrixProduct(
 		$T,
 		viewingTransform(60, 300, 3000)
 	);
+
+// $myT = print_r(array_values($T));
+// echo "T: $myT\n";
+
 
 // Calculate coordinates
 $coord = array($image2d_x * $image2d_y);
@@ -154,9 +163,21 @@ for ($y = 0; $y < $image2d_y; $y+=2) {
 		// calculate x1, y1, x2, y2
 		$xc = $x - $image2d_x / 2;
 		$zc = $y - $image2d_y / 2;
+		
+		// echo "xc: $xc\n";
+		// echo "zc: $zc\n";
+
+		
+		
 		$yc = -(imagecolorat($image2d, $x, $y) & 0xff) / 256 * $bevel;
+		// echo "yc: $yc\n";
+		
 		$xyz = array($xc, $yc, $zc, 1);
 		$xyz = vectorProduct($xyz, $T);
+
+// $myT = print_r(array_values($xyz));
+// echo "T: $xyz\n";
+
 
 		$coord[$count] = $xyz;
 		$count++;
@@ -167,6 +188,8 @@ for ($y = 0; $y < $image2d_y; $y+=2) {
 $image3d_x = 256;
 //$image3d_y = $image3d_x / 1.618;
 $image3d_y = $image3d_x * 9 / 16;
+// echo "image3d_y: $image3d_y\n";
+
 $image3d = imagecreatetruecolor($image3d_x, $image3d_y);
 $fgcolor = imagecolorallocate($image3d, 255, 255, 255);
 $bgcolor = imagecolorallocate($image3d, 0, 0, 0);
@@ -184,6 +207,14 @@ for ($y = 0; $y < $image2d_y; $y++) {
 			$y0 = $coord[$count - 1][1] * $scale + $image3d_y / 2;
 			$x1 = $coord[$count][0] * $scale + $image3d_x / 2;
 			$y1 = $coord[$count][1] * $scale + $image3d_y / 2;
+			
+			
+			// echo "x0: $x0\n";
+			// echo "y0: $y0\n";
+			// echo "x1: $x1\n";
+			// echo "y1: $y1\n";
+			
+			
 			imageline($image3d, $x0, $y0, $x1, $y1, $fgcolor);
 		}
 		$count++;
