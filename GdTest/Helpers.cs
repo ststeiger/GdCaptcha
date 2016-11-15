@@ -322,8 +322,8 @@ namespace GdTest
                                     if (c == null)
                                         continue;
 
-                                    var c0 = c[0];
-                                    var c1 = c[1];
+                                    double c0 = c[0];
+                                    double c1 = c[1];
 
                                     double x0 = coord[count - 1][0] * scale + image3d_x / 2.0;
                                     double y0 = coord[count - 1][1] * scale + image3d_y / 2.0;
@@ -345,7 +345,7 @@ namespace GdTest
                             image3d.Save(Ntx.GD.GD.FileType.Png, "mesh.png", 1);
                     } // End using image3d 
 
-                } // End Using image2d
+                } // End Using image2d 
 
             } // End Using image 
 
