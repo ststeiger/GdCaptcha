@@ -73,3 +73,7 @@ Both Chrome and Firefox made that change back in 2012 or so - see the various li
 http://www.tecmint.com/run-php-codes-from-linux-commandline/
  php -r 'phpinfo();'
  # php -a
+
+
+ http://xoax.net/blog/programming-a-3d-scene-in-wpf-with-c/
+
