@@ -192,17 +192,30 @@ namespace GdTest
         } // End Sub Gettfbbox 
 
 
+        public static string MapProjectPath(string projectPath)
+        {
+            string dir = System.IO.Path.GetDirectoryName(typeof(Helpers).Assembly.Location);
+            dir = System.IO.Path.Combine(dir, "../..");
+            dir = System.IO.Path.GetFullPath(dir);
+            dir = System.IO.Path.Combine(dir, projectPath);
+            dir = System.IO.Path.GetFullPath(dir);
+            return dir;
+        }
+
+
         public static void Test()
         {
             string captchaText = "hello";
-            captchaText = "abc123";
+            captchaText = "        Rico Luder     ";
+            captchaText = "             Stefan Steiger          ";
+            captchaText = "             Rico Luder          ";
 
             using (Ntx.GD.GD image = new Ntx.GD.GD(256 + 384, 384, true))
             {
                 // 3dcha parameters
                 int fontsize = 24;
 
-                string fontfile = "/root/Projects/GdCaptcha/GdTest/Img/3DCaptcha.ttf";
+                string fontfile = MapProjectPath("Img/3DCaptcha.ttf");
                 // fontfile = image.MapFont("Arial.ttf")
                 
                 // details = imagettfbbox(fontsize, 0, fontfile, captchaText);
@@ -211,9 +224,9 @@ namespace GdTest
 
                 //var p = (Ntx.GD.Point) details[3];
                 // int image2d_x = (int)details[3] + 4;
-                // int image2d_x = details.Width;
-                int image2d_x = 110;
-                double dblimage2d_y = System.Math.Round( ( fontsize * 1.3f) , 1);
+                // int image2d_x = 110;
+                int image2d_x = details.Width;
+                // double dblimage2d_y = System.Math.Round( ( fontsize * 1.3f) , 1);
                 int image2d_y = (int)( fontsize * 1.3f);
                 int bevel = 4;
 
@@ -240,8 +253,8 @@ namespace GdTest
 
                     // Calculate projection matrix
                     double[] T = cameraTransform(
-                        //new double[] { rand(-90, 90), -200, rand(150, 250) },
-                        new double[] { 45, -200, 220 },
+                        // new double[] { 45, -200, 220 },
+                        new double[] { rand(-90, 90), -200, rand(150, 250) },
                         new double[] { 0, 0, 0 }
                     );
 
@@ -262,7 +275,8 @@ namespace GdTest
                             
                             // calculate x1, y1, x2, y2
                             double xc = x - image2d_x / 2.0;
-                            double zc = y - dblimage2d_y / 2.0;
+                            //double zc = y - dblimage2d_y / 2.0;
+                            double zc = y - image2d_y / 2.0;
 
                             //yc = -(imagecolorat(image2d, x, y) & 0xff) / 256 * bevel;
                             double yc = -(image2d.GetPixel(x, y).Index & 0xff) / 256.0 * bevel;
@@ -283,8 +297,11 @@ namespace GdTest
                     // image3d = imagecreatetruecolor(image3d_x, image3d_y);
                     using (Ntx.GD.GD image3d = new Ntx.GD.GD(image3d_x, image3d_y, true))
                     {
-                        var fgcolor = image3d.ColorAllocate(255, 255, 255);
-                        var bgcolor = image3d.ColorAllocate(0, 0, 0);
+                        // var fgcolor = image3d.ColorAllocate(255, 255, 255);
+                        // var bgcolor = image3d.ColorAllocate(0, 0, 0);
+
+                        var bgcolor = image3d.ColorAllocate(255, 255, 255);
+                        var fgcolor = image3d.ColorAllocate(0, 0, 255);
 
                         // imageantialias(image3d, true);
                         //image3d.SetAntiAliased();

@@ -16,7 +16,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 
 \*************************************************************************************************************************/
 
-// #define WINDOWS 
+#define WINDOWS 
 
 using System;
 using System.Runtime.InteropServices;
