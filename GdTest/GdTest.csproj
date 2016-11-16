@@ -40,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Captcha3D.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="libGD3dCaptcha.cs" />
+    <Compile Include="libGDTests.cs" />
+    <Compile Include="PhpHelpers.cs" />
     <Compile Include="PlatformLoader.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="Form1.cs">
