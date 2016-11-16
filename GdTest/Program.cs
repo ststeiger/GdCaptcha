@@ -27,7 +27,7 @@ namespace GdTest
             {
                 img2.CopyResampled(img, 0, 0, 0, 0, width2, height2, width, height);
 
-                for(int i = 0; i < width2; i += 2)
+                for (int i = 0; i < width2; i += 2)
                     img2.Copy(img2, x + i - 2, (int)(y + System.Math.Sin((double)i / period) * amplitude), x + i, y, 2, height2);
 
                 img.CopyResampled(img2, x, y, 0, 0, width, height, width2, height2);
@@ -70,10 +70,10 @@ namespace GdTest
             int image2d_y = 0;
 
 
-            string fontFile =@"/root/Projects/GdCaptcha/GdTest/Img/3DCaptcha.ttf";
-            fontFile =@"/root/Downloads/ufonts.com_algerian.ttf";
+            string fontFile = Helpers.MapProjectPath("Img/3DCaptcha.ttf");
+            // fontFile = Helpers.MapProjectPath("Img/ALGER.ttf");
 
-            System.Drawing.Font font = GetCustomFont(fontFile, fontSize);;
+            System.Drawing.Font font = GetCustomFont(fontFile, fontSize); ;
 
             using (System.Drawing.Font fontt = new System.Drawing.Font(fontFamily, fontSize, System.Drawing.FontStyle.Bold))
             {
@@ -90,12 +90,12 @@ namespace GdTest
 
                 using (System.Drawing.Bitmap image2d = new System.Drawing.Bitmap(image2d_x, image2d_y))
                 {
-                
+
                     using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(image2d))
                     {
                         g.Clear(System.Drawing.Color.Black);
                         g.DrawString(captchaText, font, System.Drawing.Brushes.White, new System.Drawing.PointF(1, -1));
-                        image2d.Save("/root/Projects/GdCaptcha/GdTest/Img/ftstring.png", System.Drawing.Imaging.ImageFormat.Png);
+                        image2d.Save(Helpers.MapProjectPath("Img/ftstring.png"), System.Drawing.Imaging.ImageFormat.Png);
 
                         // Calculate projection matrix
                         double[] T = Helpers.cameraTransform(
@@ -174,7 +174,7 @@ namespace GdTest
                                 double[] c = coord[count - 1];
                                 if (c == null)
                                     continue;
-                                
+
                                 double x0 = coord[count - 1][0] * scale + image3d_x / 2.0;
                                 double y0 = coord[count - 1][1] * scale + image3d_y / 2.0;
                                 double x1 = coord[count][0] * scale + image3d_x / 2.0;
@@ -191,11 +191,7 @@ namespace GdTest
 
                 } // End Using g
 
-                string fileName = "mesh.png";
-                if (System.Environment.OSVersion.Platform == System.PlatformID.Unix)
-                    fileName = "/root/Projects/GdCaptcha/GdTest/Img/mesh.png";
-
-                image3d.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                image3d.Save(Helpers.MapProjectPath("Img/mesh.png"), System.Drawing.Imaging.ImageFormat.Png);
             } // End using image3d 
 
         }
@@ -220,7 +216,7 @@ namespace GdTest
             System.Console.WriteLine(ct);
             System.Console.WriteLine(ctRand);
             System.Console.WriteLine(ctClean);
-            
+
 
             GdTest.Helpers.Test();
 
@@ -259,9 +255,9 @@ namespace GdTest
 
                     // image.SetPixel(10, 10, blue);
                     // GDColor pixCol = image.GetPixel(10, 10);
-                    image.Arc( 128, 128, 60, 20, 0, 720, blue );
+                    image.Arc(128, 128, 60, 20, 0, 720, blue);
 
-                    image.SetAntiAliased( red );
+                    image.SetAntiAliased(red);
                     // image.String(ft, 10, 10, "Hello", red);
 
                     System.Collections.ArrayList al = new System.Collections.ArrayList();
@@ -272,7 +268,7 @@ namespace GdTest
                 wave_area(image);
 
                 image.Interlace = true;
-                image.Save( GD.FileType.Png, "text.png", 1 );
+                image.Save(GD.FileType.Png, "text.png", 1);
             }
 
 
@@ -294,5 +290,8 @@ namespace GdTest
             System.Windows.Forms.Application.Run(new Form1());
         }
 
+
     }
+
+
 }
