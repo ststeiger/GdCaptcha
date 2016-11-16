@@ -53,7 +53,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers.cs" />
+    <Compile Include="MathHelpers.cs" />
     <Compile Include="Import\GDImport.cs" />
     <Compile Include="Markov.cs" />
     <Compile Include="PlatformHelper.cs" />
